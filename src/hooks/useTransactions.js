@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useUser } from '@stackframe/react';
+import { API_URL } from '../config/api';
 
 export const useTransactions = () => {
   const user = useUser();
@@ -9,7 +10,7 @@ export const useTransactions = () => {
     if (user) {
       user.getAuthJson().then(authJson => {
         const token = authJson.accessToken;
-        fetch('/api/transactions', {
+        fetch(`${API_URL}/api/transactions`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -42,7 +43,7 @@ export const useTransactions = () => {
       let res;
       if (transaction.id) {
         // Update existing
-        res = await fetch(`/api/transactions/${transaction.id}`, {
+        res = await fetch(`${API_URL}/api/transactions/${transaction.id}`, {
           method: 'PUT',
           headers: { 
             'Content-Type': 'application/json',
@@ -52,7 +53,7 @@ export const useTransactions = () => {
         });
       } else {
         // Create new
-        res = await fetch('/api/transactions', {
+        res = await fetch(`${API_URL}/api/transactions`, {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json',
@@ -82,7 +83,7 @@ export const useTransactions = () => {
     try {
       const authJson = await user.getAuthJson();
       const token = authJson.accessToken;
-      const res = await fetch(`/api/transactions/${id}`, { 
+      const res = await fetch(`${API_URL}/api/transactions/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

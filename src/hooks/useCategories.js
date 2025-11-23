@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useUser } from '@stackframe/react';
+import { API_URL } from '../config/api';
 
 const DEFAULT_CATEGORIES = [
   { id: '1', name: 'Food', icon: 'Utensils', type: 'expense', subCategories: ['Groceries', 'Restaurants', 'Snacks'] },
@@ -20,7 +21,7 @@ export function useCategories() {
     if (user) {
       user.getAuthJson().then(authJson => {
         const token = authJson.accessToken;
-        fetch('/api/categories', {
+        fetch(`${API_URL}/api/categories`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -45,7 +46,7 @@ export function useCategories() {
     try {
       const authJson = await user.getAuthJson();
       const token = authJson.accessToken;
-      const res = await fetch('/api/categories', {
+      const res = await fetch(`${API_URL}/api/categories`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -66,7 +67,7 @@ export function useCategories() {
     try {
       const authJson = await user.getAuthJson();
       const token = authJson.accessToken;
-      const res = await fetch(`/api/categories/${id}`, { 
+      const res = await fetch(`${API_URL}/api/categories/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -89,7 +90,7 @@ export function useCategories() {
     try {
       const authJson = await user.getAuthJson();
       const token = authJson.accessToken;
-      const res = await fetch(`/api/categories/${categoryId}`, {
+      const res = await fetch(`${API_URL}/api/categories/${categoryId}`, {
         method: 'PUT',
         headers: { 
           'Content-Type': 'application/json',
@@ -115,7 +116,7 @@ export function useCategories() {
     try {
       const authJson = await user.getAuthJson();
       const token = authJson.accessToken;
-      const res = await fetch(`/api/categories/${categoryId}`, {
+      const res = await fetch(`${API_URL}/api/categories/${categoryId}`, {
         method: 'PUT',
         headers: { 
           'Content-Type': 'application/json',
